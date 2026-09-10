@@ -4,11 +4,11 @@
 # Unten im Abschnitt "Environment variables" die Werte setzen (oder hier direkt
 # eintragen). Danach "Deploy the stack".
 #
-# Voraussetzung: das Image liegt auf Docker Hub. DEINUSER ersetzen.
+# Voraussetzung: das Image liegt auf Docker Hub (kallifabio/fivem-scanguard).
 
 services:
   scanguard:
-    image: DEINUSER/fivem-scanguard:latest
+    image: kallifabio/fivem-scanguard:latest
     container_name: fivem-scanguard
     ports:
       - "${SCANGUARD_PORT:-8080}:8080"

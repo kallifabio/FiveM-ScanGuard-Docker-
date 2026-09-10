@@ -30,7 +30,7 @@ docker run -d \
   -e SCAN_INTERVAL_MINUTES=60 \
   --read-only --tmpfs /tmp \
   --security-opt no-new-privileges:true \
-  DEINUSER/fivem-scanguard:latest
+  kallifabio/fivem-scanguard:latest
 ```
 
 Dashboard danach unter `http://SERVER-IP:8080`. Ist `AUTH_TOKEN` gesetzt, fragt
@@ -41,7 +41,7 @@ das Dashboard beim ersten Aufruf danach.
 ```yaml
 services:
   scanguard:
-    image: DEINUSER/fivem-scanguard:latest
+    image: kallifabio/fivem-scanguard:latest
     container_name: fivem-scanguard
     ports:
       - "8080:8080"
@@ -71,7 +71,7 @@ volumes:
 ## Portainer
 
 1. **Stacks → Add stack → Web editor**.
-2. Den Inhalt von [`portainer-stack.yml`](https://github.com/DEINUSER/fivem-scanguard/blob/main/portainer-stack.yml) einfügen und `DEINUSER` ersetzen.
+2. Den Inhalt von [`portainer-stack.yml`](https://github.com/kallifabio/fivem-scanguard/blob/main/portainer-stack.yml) einfügen.
 3. Unter **Environment variables** setzen:
    | Name | Beispiel | Zweck |
    |---|---|---|
@@ -140,4 +140,4 @@ Statische Heuristik, kein Ersatz für eine manuelle Code-Review. Gute
 Obfuskierung kann Erkennung umgehen, False Positives sind möglich. Funde sind
 ein Hinweis, kein Urteil.
 
-Quellcode & Doku: **https://github.com/DEINUSER/fivem-scanguard** · Lizenz: MIT
+Quellcode & Doku: **https://github.com/kallifabio/fivem-scanguard** · Lizenz: MIT

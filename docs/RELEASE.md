@@ -1,6 +1,6 @@
 # Neue Version veröffentlichen
 
-`DEINUSER` = dein Docker-Hub-Benutzer/Namespace.
+`kallifabio` = dein Docker-Hub-Benutzer/Namespace.
 
 ## Einmalig einrichten
 
@@ -42,17 +42,17 @@ VERSION=$(node -p "require('./package.json').version")
 
 docker buildx build \
   --platform linux/amd64,linux/arm64 \
-  -t DEINUSER/fivem-scanguard:$VERSION \
-  -t DEINUSER/fivem-scanguard:latest \
+  -t kallifabio/fivem-scanguard:$VERSION \
+  -t kallifabio/fivem-scanguard:latest \
   --push .
 ```
 
 Nur eine Architektur (schneller, lokal testbar):
 
 ```bash
-docker build -t DEINUSER/fivem-scanguard:$VERSION -t DEINUSER/fivem-scanguard:latest .
-docker push DEINUSER/fivem-scanguard:$VERSION
-docker push DEINUSER/fivem-scanguard:latest
+docker build -t kallifabio/fivem-scanguard:$VERSION -t kallifabio/fivem-scanguard:latest .
+docker push kallifabio/fivem-scanguard:$VERSION
+docker push kallifabio/fivem-scanguard:latest
 ```
 
 ### 4. Git pushen
@@ -64,14 +64,13 @@ git push --follow-tags
 ### 5. Docker-Hub-Overview aktualisieren
 
 Docker Hub → Repository → **Edit** → Inhalt von [`docs/DOCKERHUB.md`](./DOCKERHUB.md)
-in „Overview" einfügen (`DEINUSER` ersetzen). Oder automatisiert per GitHub
-Action (siehe unten).
+in „Overview" einfügen. Oder automatisiert per GitHub Action (siehe unten).
 
 ## Deployen der neuen Version
 
 | Umgebung | Update |
 |---|---|
-| `docker run` | `docker pull DEINUSER/fivem-scanguard:latest && docker rm -f fivem-scanguard && docker run …` |
+| `docker run` | `docker pull kallifabio/fivem-scanguard:latest && docker rm -f fivem-scanguard && docker run …` |
 | `docker compose` | `docker compose pull && docker compose up -d` |
 | **Portainer** | Stack öffnen → **Pull and redeploy** (bzw. „Re-pull image" aktivieren) |
 

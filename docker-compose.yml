@@ -1,8 +1,8 @@
 services:
   scanguard:
     build: .
-    # Nach der Veröffentlichung auf Docker Hub kann "build: ." durch
-    # "image: <dein-dockerhub-name>/fivem-scanguard:latest" ersetzt werden.
+    # Alternativ das fertige Image nutzen statt lokal zu bauen:
+    # image: kallifabio/fivem-scanguard:latest   (und "build: ." entfernen)
     container_name: fivem-scanguard
     ports:
       - "8080:8080"

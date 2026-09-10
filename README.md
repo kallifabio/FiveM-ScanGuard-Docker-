@@ -4,7 +4,7 @@
 
 **Selbst gehosteter Malware-Scanner für FiveM-Ressourcen — als Docker-Container mit Dashboard, API und Discord-Alerts.**
 
-[![Docker Image](https://img.shields.io/badge/docker-fivem--scanguard-9d5cff?logo=docker&logoColor=white)](https://hub.docker.com/r/dein-dockerhub-name/fivem-scanguard)
+[![Docker Image](https://img.shields.io/badge/docker-fivem--scanguard-9d5cff?logo=docker&logoColor=white)](https://hub.docker.com/r/kallifabio/fivem-scanguard)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2ea44f)](./LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D18-339933?logo=node.js&logoColor=white)](https://nodejs.org)
 [![Made for FiveM](https://img.shields.io/badge/made%20for-FiveM-ff4d6d)](https://fivem.net)
@@ -83,7 +83,7 @@ docker run -d \
   -v scanguard-data:/data \
   -e DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/..." \
   -e SCAN_INTERVAL_MINUTES=60 \
-  dein-dockerhub-name/fivem-scanguard:latest
+  kallifabio/fivem-scanguard:latest
 ```
 
 ## ⚙️ Umgebungsvariablen
@@ -140,10 +140,10 @@ curl -s -X POST http://scanguard:8080/api/scan/path | jq '.summary'
 ## 🐳 Portainer
 
 `portainer-stack.yml` ist ein fertiger Stack: **Stacks → Add stack → Web editor**,
-Inhalt einfügen, `DEINUSER` ersetzen, unter *Environment variables* mindestens
-`RESOURCES_HOST_PATH` (Pfad zum resources-Ordner auf dem Docker-Host) und – wenn
-gewünscht – `AUTH_TOKEN` setzen, dann **Deploy the stack**. Update später über
-**Pull and redeploy**. Das `/data`-Volume bleibt erhalten.
+Inhalt einfügen, unter *Environment variables* mindestens `RESOURCES_HOST_PATH`
+(Pfad zum resources-Ordner auf dem Docker-Host) und – wenn gewünscht –
+`AUTH_TOKEN` setzen, dann **Deploy the stack**. Update später über **Pull and
+redeploy**. Das `/data`-Volume bleibt erhalten.
 
 ## 📦 Release / neue Version auf Docker Hub
 
@@ -154,8 +154,8 @@ npm test
 npm version patch          # baut Assets, bumpt Version, setzt Git-Tag vX.Y.Z
 VERSION=$(node -p "require('./package.json').version")
 docker buildx build --platform linux/amd64,linux/arm64 \
-  -t DEINUSER/fivem-scanguard:$VERSION \
-  -t DEINUSER/fivem-scanguard:latest --push .
+  -t kallifabio/fivem-scanguard:$VERSION \
+  -t kallifabio/fivem-scanguard:latest --push .
 git push --follow-tags
 ```
 

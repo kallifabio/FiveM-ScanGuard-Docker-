@@ -1,0 +1,51 @@
+# FiveM ScanGuard – Stack für Portainer
+# --------------------------------------
+# Portainer  ->  Stacks  ->  Add stack  ->  "Web editor"  ->  diesen Inhalt einfügen.
+# Unten im Abschnitt "Environment variables" die Werte setzen (oder hier direkt
+# eintragen). Danach "Deploy the stack".
+#
+# Voraussetzung: das Image liegt auf Docker Hub. DEINUSER ersetzen.
+
+services:
+  scanguard:
+    image: DEINUSER/fivem-scanguard:latest
+    container_name: fivem-scanguard
+    ports:
+      - "${SCANGUARD_PORT:-8080}:8080"
+    environment:
+      # Leerlassen = Zugriff ohne Token. Empfohlen: langes, zufälliges Token setzen.
+      AUTH_TOKEN: "${AUTH_TOKEN:-}"
+      DISCORD_WEBHOOK_URL: "${DISCORD_WEBHOOK_URL:-}"
+      SCAN_INTERVAL_MINUTES: "${SCAN_INTERVAL_MINUTES:-0}"
+      RESOURCES_PATH: /resources
+      # Hinter Portainers Reverse-Proxy / Traefik ggf. auf "1" setzen:
+      TRUST_PROXY: "${TRUST_PROXY:-}"
+      TZ: "${TZ:-Europe/Berlin}"
+    volumes:
+      # Pfad zum resources-Ordner AUF DEM DOCKER-HOST (read-only):
+      - "${RESOURCES_HOST_PATH:-/opt/fivem/resources}:/resources:ro"
+      # Scan-Historie + optionale eigene blocklist.txt:
+      - scanguard-data:/data
+    restart: unless-stopped
+
+    # ----- Härtung -----
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 256
+    mem_limit: 512m
+    cpus: 1.0
+
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  scanguard-data:

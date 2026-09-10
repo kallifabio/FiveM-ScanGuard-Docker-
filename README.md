@@ -137,21 +137,32 @@ Response auf `summary.counts.critical > 0` prüfen, um einen Merge zu blocken.
 curl -s -X POST http://scanguard:8080/api/scan/path | jq '.summary'
 ```
 
-## 📦 Auf Docker Hub veröffentlichen
+## 🐳 Portainer
+
+`portainer-stack.yml` ist ein fertiger Stack: **Stacks → Add stack → Web editor**,
+Inhalt einfügen, `DEINUSER` ersetzen, unter *Environment variables* mindestens
+`RESOURCES_HOST_PATH` (Pfad zum resources-Ordner auf dem Docker-Host) und – wenn
+gewünscht – `AUTH_TOKEN` setzen, dann **Deploy the stack**. Update später über
+**Pull and redeploy**. Das `/data`-Volume bleibt erhalten.
+
+## 📦 Release / neue Version auf Docker Hub
+
+Kurzfassung – Details in [`docs/RELEASE.md`](./docs/RELEASE.md):
 
 ```bash
-docker build -t dein-dockerhub-name/fivem-scanguard:latest .
-docker login
-docker push dein-dockerhub-name/fivem-scanguard:latest
-```
-
-Für mehrere Architekturen (amd64 + arm64, z. B. für Raspberry-Pi-Hosts):
-
-```bash
-docker buildx create --use
+npm test
+npm version patch          # baut Assets, bumpt Version, setzt Git-Tag vX.Y.Z
+VERSION=$(node -p "require('./package.json').version")
 docker buildx build --platform linux/amd64,linux/arm64 \
-  -t dein-dockerhub-name/fivem-scanguard:latest --push .
+  -t DEINUSER/fivem-scanguard:$VERSION \
+  -t DEINUSER/fivem-scanguard:latest --push .
+git push --follow-tags
 ```
+
+Die Overview-Seite des Docker-Hub-Repos wird aus [`docs/DOCKERHUB.md`](./docs/DOCKERHUB.md)
+gepflegt (manuell einfügen oder automatisch über
+[`.github/workflows/docker-publish.yml`](./.github/workflows/docker-publish.yml),
+das bei jedem `v*`-Tag baut, pusht und die Beschreibung synchronisiert).
 
 ## 🧪 Lokale Entwicklung ohne Docker
 

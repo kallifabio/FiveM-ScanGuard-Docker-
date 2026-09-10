@@ -113,9 +113,8 @@ pro Zeile, `#` für Kommentare) – ergänzt die eingebaute Liste.
 
 | Tag | Bedeutung |
 |---|---|
-| `latest` | aktuellster Stand des `main`-Branch |
+| `latest` | jeweils neuster Release |
 | `X.Y.Z` | fixierte Release-Version (empfohlen für Produktion) |
-| `X.Y` / `X` | mitlaufender Minor-/Major-Alias |
 
 Plattformen: `linux/amd64`, `linux/arm64` (z. B. Raspberry Pi).
 

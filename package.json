@@ -1,0 +1,37 @@
+{
+  "name": "fivem-scanguard",
+  "version": "1.0.0",
+  "description": "FiveM ScanGuard – selbst gehosteter Scanner für schädlichen Code in FiveM-Ressourcen mit Web-Dashboard, REST-API und Discord-Benachrichtigungen.",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "cross-env RESOURCES_PATH=./test-resources DATA_DIR=./data node src/server.js",
+    "build:icons": "node scripts/build-icons.js",
+    "build:fonts": "node scripts/build-fonts.js",
+    "build:css": "tailwindcss -i src/styles/tailwind.css -o public/assets/app.css --minify",
+    "build": "npm run build:icons && npm run build:fonts && npm run build:css",
+    "test": "node --test test/",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.10",
+    "dotenv": "^16.6.1",
+    "express": "^4.19.2",
+    "multer": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.1",
+    "prettier": "^3.9.6",
+    "tailwindcss": "^3.4.19"
+  }
+}

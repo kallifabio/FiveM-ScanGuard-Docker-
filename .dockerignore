@@ -1,0 +1,26 @@
+node_modules
+npm-debug.log
+data
+scanguard-data
+.env
+.env.*
+.git
+.gitignore
+.github
+.claude
+.vscode
+.idea
+
+# Wird in der Build-Stage frisch erzeugt
+public/assets
+
+# Dev-/Test-Only
+test
+test-resources
+*.md
+.eslintrc.json
+.eslintignore
+.prettierrc.json
+.prettierignore
+Dockerfile
+docker-compose.yml

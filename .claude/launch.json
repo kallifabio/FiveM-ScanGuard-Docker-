@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "scanguard",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["src/server.js"],
+      "env": {
+        "RESOURCES_PATH": "./test-resources",
+        "DATA_DIR": "./data"
+      },
+      "port": 8080
+    }
+  ]
+}

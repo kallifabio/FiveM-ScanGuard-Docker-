@@ -1,0 +1,5 @@
+node_modules
+data
+test-resources
+public/assets
+package-lock.json

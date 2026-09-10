@@ -1,0 +1,34 @@
+services:
+  scanguard:
+    build: .
+    # Nach der Veröffentlichung auf Docker Hub kann "build: ." durch
+    # "image: <dein-dockerhub-name>/fivem-scanguard:latest" ersetzt werden.
+    container_name: fivem-scanguard
+    ports:
+      - "8080:8080"
+    environment:
+      DISCORD_WEBHOOK_URL: ""
+      RESOURCES_PATH: /resources
+      SCAN_INTERVAL_MINUTES: "0"
+      # Setzen, um Dashboard und API mit einem Bearer-Token zu schützen:
+      AUTH_TOKEN: ""
+    volumes:
+      # Read-only-Mount des FiveM-Resources-Ordners, der geprüft werden soll.
+      - ./resources:/resources:ro
+      - scanguard-data:/data
+    restart: unless-stopped
+
+    # ----- Härtung -----
+    read_only: true          # Root-Dateisystem unveränderbar (Daten liegen im Volume)
+    tmpfs:
+      - /tmp                  # Uploads / ZIP-Entpacken laufen hier
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 256
+    mem_limit: 512m
+    cpus: 1.0
+
+volumes:
+  scanguard-data:

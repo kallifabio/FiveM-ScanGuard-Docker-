@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Ergänzung zu den Tailwind-Utilities – nur das, was sich als Utility schlecht
+  ausdrücken lässt. Design bleibt bewusst: Fast-Schwarz mit violettem Unterton,
+  Space Grotesk für Marke & Zahlen, JetBrains Mono für den Scan-Log – die Funde
+  SIND das Produkt, deshalb ein Terminal-Log statt generischer Karten.
+
+  Schriften werden lokal ausgeliefert (public/assets/fonts.css), damit die UI
+  auch auf einem abgeschotteten Server ohne Internet vollständig rendert.
+*/
+
+@layer base {
+  body {
+    @apply bg-base font-mono text-ink;
+  }
+
+  /* Das [hidden]-Attribut muss Tailwind-Displayklassen (z. B. .flex) schlagen. */
+  [hidden] {
+    display: none !important;
+  }
+
+  /* Inline-Icons aus dem SVG-Sprite (public/assets/icons.svg) */
+  .icon {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: -0.125em;
+  }
+}
+
+@layer components {
+  /* Risiko-Score: Farbe folgt dem Schweregrad (überschreibt die Utility-Farbe) */
+  #risk-number[data-level='critical'] {
+    color: #ff4d6d;
+  }
+  #risk-number[data-level='high'] {
+    color: #ff9f43;
+  }
+  #risk-number[data-level='clean'] {
+    color: #4ade80;
+  }
+
+  /* Laufender Scan: Lichtstrahl über dem Log */
+  #console.scanning::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #9d5cff, transparent);
+    animation: sweep 1.4s linear infinite;
+  }
+
+  /* Log-Zeile: farbige Kante nach Schweregrad statt reiner Trennlinie */
+  .log-line {
+    padding: 12px 0 12px 14px;
+    border-left: 2px solid #2b2438;
+    border-bottom: 1px solid #2b2438;
+  }
+  .log-line:last-child {
+    border-bottom: none;
+  }
+  .log-line[data-severity='critical'] {
+    border-left-color: #ff4d6d;
+  }
+  .log-line[data-severity='high'] {
+    border-left-color: #ff9f43;
+  }
+  .log-line[data-severity='medium'] {
+    border-left-color: #ffd166;
+  }
+  .log-line[data-severity='low'] {
+    border-left-color: #6ec6ff;
+  }
+
+  .log-snippet {
+    margin: 8px 0 0;
+    padding: 8px 10px;
+    background: #1d1928;
+    border-radius: 6px;
+    color: #eee9fb;
+    font-size: 12px;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  /* Aufklappbare Ressourcen-Gruppe */
+  .res-group > summary {
+    list-style: none;
+    cursor: pointer;
+  }
+  .res-group > summary::-webkit-details-marker {
+    display: none;
+  }
+  .res-group[open] .res-chevron {
+    transform: rotate(90deg);
+  }
+  .res-chevron {
+    transition: transform 0.15s ease;
+  }
+}
+
+@layer utilities {
+  /* Dezente Scrollbar, passend zum dunklen Theme */
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #2b2438 transparent;
+  }
+  .scroll-thin::-webkit-scrollbar {
+    width: 8px;
+  }
+  .scroll-thin::-webkit-scrollbar-thumb {
+    background: #2b2438;
+    border-radius: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #console.scanning::before {
+    animation: none;
+    opacity: 0.6;
+  }
+  .res-chevron,
+  .btn {
+    transition: none !important;
+  }
+}

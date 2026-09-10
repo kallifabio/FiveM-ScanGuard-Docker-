@@ -1,5 +1,8 @@
 # ---------- Build-Stage: UI-Assets erzeugen (Tailwind, Icons, Schriften) ----------
-FROM node:20-alpine AS build
+# Läuft IMMER nativ auf der Runner-Architektur (--platform=$BUILDPLATFORM), nie
+# emuliert: die Assets (CSS/SVG/woff2) sind architektur-unabhängig, und `npm ci`
+# mit den vollen devDeps crasht unter QEMU-arm64 ("Illegal instruction").
+FROM --platform=$BUILDPLATFORM node:20-alpine AS build
 WORKDIR /app
 
 COPY package.json package-lock.json ./

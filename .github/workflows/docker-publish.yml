@@ -55,11 +55,17 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      # Aktualisiert die Overview-Seite auf Docker Hub. Braucht das ECHTE
+      # Account-Passwort (Secret DOCKERHUB_PASSWORD) – ein Personal Access Token
+      # wird von der Hub-Management-API mit 403 abgelehnt. Ohne das Secret wird
+      # der Schritt übersprungen; die Beschreibung dann einmalig von Hand pflegen.
       - name: Sync Docker Hub description
+        if: ${{ secrets.DOCKERHUB_PASSWORD != '' }}
+        continue-on-error: true
         uses: peter-evans/dockerhub-description@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
           repository: ${{ secrets.DOCKERHUB_USERNAME }}/fivem-scanguard
           readme-filepath: ./docs/DOCKERHUB.md
           short-description: "Selbst gehosteter Malware-Scanner für FiveM-Ressourcen (Dashboard, API, Discord-Alerts)"

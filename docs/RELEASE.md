@@ -78,12 +78,12 @@ Das `/data`-Volume (Scan-Historie) bleibt bei Updates erhalten.
 
 ## Optional: automatisch per GitHub Actions
 
-`.github/workflows/docker-publish.yml` baut und pusht bei jedem `v*`-Tag und
-synchronisiert die Docker-Hub-Beschreibung. Vorher als Repository-Secrets
-hinterlegen:
+`.github/workflows/docker-publish.yml` baut und pusht bei jedem `v*`-Tag.
+Repository-Secrets:
 
-- `DOCKERHUB_USERNAME`
-- `DOCKERHUB_TOKEN` (Docker Hub → Account Settings → Personal access tokens)
+- `DOCKERHUB_USERNAME` – dein Hub-Benutzername
+- `DOCKERHUB_TOKEN` – Personal Access Token (Docker Hub → Account Settings → Personal access tokens), für Login + Push
+- `DOCKERHUB_PASSWORD` – **optional**, echtes Account-Passwort. Nur damit kann die Action die Overview-Seite auf Docker Hub aktualisieren (die Hub-Management-API akzeptiert dort kein PAT → `403`). Fehlt das Secret, wird der Schritt übersprungen und die Beschreibung wird einmalig von Hand unter *Repository → Edit → Overview* aus [`DOCKERHUB.md`](./DOCKERHUB.md) gepflegt.
 
 Danach reicht Schritt 2 + 4 (`npm version …` und `git push --follow-tags`) – den
 Rest erledigt die Action.

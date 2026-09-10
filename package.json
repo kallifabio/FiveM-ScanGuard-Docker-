@@ -1,6 +1,6 @@
 {
   "name": "fivem-scanguard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "FiveM ScanGuard – selbst gehosteter Scanner für schädlichen Code in FiveM-Ressourcen mit Web-Dashboard, REST-API und Discord-Benachrichtigungen.",
   "main": "src/server.js",
   "type": "commonjs",

@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    env:
+      # secrets ist in `if:` nicht erlaubt – hier auf einen env-Wert abbilden.
+      HAS_HUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD != '' }}
     steps:
       - name: Check required secrets
         run: |
@@ -60,7 +63,7 @@ jobs:
       # wird von der Hub-Management-API mit 403 abgelehnt. Ohne das Secret wird
       # der Schritt übersprungen; die Beschreibung dann einmalig von Hand pflegen.
       - name: Sync Docker Hub description
-        if: ${{ secrets.DOCKERHUB_PASSWORD != '' }}
+        if: env.HAS_HUB_PASSWORD == 'true'
         continue-on-error: true
         uses: peter-evans/dockerhub-description@v4
         with:
